@@ -1,9 +1,9 @@
 <?php
 
-$shutdown = 'sudo /sbin/shutdown -%s now';
+$shutdown = 'sudo /sbin/%s';
 
 if (isset($_GET['arg']))
-	if (!strcmp($_GET['arg'], 'r') || !strcmp($_GET['arg'], 'h'))
+	if (!strcmp($_GET['arg'], 'reboot') || !strcmp($_GET['arg'], 'poweroff'))
 		system(sprintf($shutdown, $_GET['arg']));
 	else
 		echo 'Error: wrong argument.';
