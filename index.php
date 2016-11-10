@@ -96,7 +96,7 @@ if (count($station)) {
 }
 
 ?>
-		<div id="reboot" onclick="return shutdown('r')">Reboot</div>
-		<div id="poweroff" onclick="return shutdown('h')">Power Off</div>
+		<div id="reboot" onclick="return shutdown('reboot')">Reboot</div>
+		<div id="poweroff" onclick="return shutdown('poweroff')">Power Off</div>
 	</body>
 </html>
