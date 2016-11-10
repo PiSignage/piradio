@@ -22,7 +22,7 @@ header('Content-Type: text/html; charset=utf-8');
 	<head profile="http://www.w3.org/2005/10/profile">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>Internet Radio</title>
-		<meta name="author" content="Ewoud Dronkert" />
+		<meta name="author" content="Michael Jones" />
 		<style type="text/css">
 			* { border: 0; margin: 0; padding: 0; }
 			body { margin: 10px; background-color: #fff; }
