@@ -29,7 +29,7 @@ BCBIN=/usr/bin/bc
 ATBIN=/usr/bin/at
 ATCMD="$PLAYER stop"
 PIHOME=$(cat /etc/passwd | grep -e '^pi:' | cut -d':' -f6)
-DBFILE=$PIHOME/radio.txt
+DBFILE=$PIHOME/.radiodb
 DEFVOL=60
 ADJVOL=5
 
