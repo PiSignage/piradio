@@ -39,6 +39,9 @@ header('Content-Type: text/html; charset=utf-8');
 				font-size: 22px;
 				border: none;
 				border-radius: 0px;
+				color: #000;
+				background-color: #bdf;
+				margin-top: 10px;
 			}
 		</style>
 
