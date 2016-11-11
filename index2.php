@@ -35,9 +35,10 @@ header('Content-Type: text/html; charset=utf-8');
 		<!--  -->
 
 		<style>
-			.starter-template {
-				padding: 40px 15px;
-				text-align: center;
+			pre {
+				font-size: 22px;
+				border: none;
+				border-radius: 0px;
 			}
 		</style>
 
@@ -53,28 +54,25 @@ header('Content-Type: text/html; charset=utf-8');
 			</div>
 
 			<a href="#" class="btn btn-block btn-lg btn-danger" onclick="return tune('off')"><span class="glyphicon glyphicon-off"></span> Radio Off</a>
-			<a href="#" class="btn btn-block btn-lg btn-primary"><span class="glyphicon glyphicon-volume-down"></span> Vol -</a>
-			<a href="#" class="btn btn-block btn-lg btn-primary"><span class="glyphicon glyphicon-volume-up"></span> Vol +</a>
-			<a href="#" class="btn btn-block btn-lg btn-primary"><span class="glyphicon glyphicon-volume-off"></span> Mute</a>
+			<a href="#" class="btn btn-block btn-lg btn-primary" onclick="return vol('-')"><span class="glyphicon glyphicon-volume-down"></span> Vol -</a>
+			<a href="#" class="btn btn-block btn-lg btn-primary" onclick="return vol('+')"><span class="glyphicon glyphicon-volume-up"></span> Vol +</a>
+			<a href="#" class="btn btn-block btn-lg btn-primary" onclick="return vol('mute')"><span class="glyphicon glyphicon-volume-off"></span> Mute</a>
+			<a href="#" class="btn btn-block btn-lg btn-primary" onclick="return shutdown('reboot')"><span class="glyphicon glyphicon-volume-off"></span> Reboot</a>
+			<a href="#" class="btn btn-block btn-lg btn-primary" onclick="return shutdown('poweroff')"><span class="glyphicon glyphicon-volume-off"></span> Shutdown</a>
 
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Firstname</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>John</td>
-					</tr>
-					<tr>
-						<td>John</td>
-					</tr>
-					<tr>
-						<td>John</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="panel panel-default" style="margin-top: 20xp">
+				<div class="panel-heading">Stations</div>
+				<div class="panel-body">Body</div>
+				<ul class="list-group">
+					<?php
+					$rowid = 0;
+					foreach ($station as $id => $url) {
+						echo '<li class="list-group-item ' . $rowid . '"><a href="#' . urlencode($id) . '" onclick="return tune(\'' . urlencode($id) . '\')">' . htmlspecialchars($id . ' | ' . $url) . '</a></li>' . PHP_EOL;
+						$rowid = 1 - $rowid;
+					}
+					?>
+				</ul>
+			</div>
 
 		</div><!-- /.container -->
 
