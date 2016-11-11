@@ -62,7 +62,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 			<div class="panel panel-default" style="margin-top: 20px">
 				<div class="panel-heading">Stations</div>
-				<div class="panel-body">Body</div>
+				<div class="panel-body">Please select a station from the list below</div>
 				<ul class="list-group">
 					<?php
 					$rowid = 0;
