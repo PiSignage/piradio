@@ -86,7 +86,7 @@ function SnoozeClear () {
 
 function SnoozeReset () {
 	SnoozeClear
-	echo -n "$ATCMD" | sudo $ATBIN -M now + 3 hours &> /dev/null
+	echo -n "$ATCMD" | sudo $ATBIN -M now + 8 hours &> /dev/null
 }
 
 # Return earliest snooze time via standard out
