@@ -57,10 +57,10 @@ header('Content-Type: text/html; charset=utf-8');
 			<a href="#" class="btn btn-block btn-lg btn-primary" onclick="return vol('-')"><span class="glyphicon glyphicon-volume-down"></span> Vol -</a>
 			<a href="#" class="btn btn-block btn-lg btn-primary" onclick="return vol('+')"><span class="glyphicon glyphicon-volume-up"></span> Vol +</a>
 			<a href="#" class="btn btn-block btn-lg btn-primary" onclick="return vol('mute')"><span class="glyphicon glyphicon-volume-off"></span> Mute</a>
-			<a href="#" class="btn btn-block btn-lg btn-primary" onclick="return shutdown('reboot')"><span class="glyphicon glyphicon-volume-off"></span> Reboot</a>
-			<a href="#" class="btn btn-block btn-lg btn-primary" onclick="return shutdown('poweroff')"><span class="glyphicon glyphicon-volume-off"></span> Shutdown</a>
+			<a href="#" class="btn btn-block btn-lg btn-success" onclick="return shutdown('reboot')"><span class="glyphicon glyphicon-repeat"></span> System Reboot</a>
+			<a href="#" class="btn btn-block btn-lg btn-danger" onclick="return shutdown('poweroff')"><span class="glyphicon glyphicon-off"></span> System Shutdown</a>
 
-			<div class="panel panel-default" style="margin-top: 20xp">
+			<div class="panel panel-default" style="margin-top: 20px">
 				<div class="panel-heading">Stations</div>
 				<div class="panel-body">Body</div>
 				<ul class="list-group">
