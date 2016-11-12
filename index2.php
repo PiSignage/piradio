@@ -41,11 +41,16 @@ header('Content-Type: text/html; charset=utf-8');
 				background-color: #bdf;
 				margin-top: 10px;
 			}
+			@media only screen and (min-width: 600px) {
+				pre {
+					font-size: 12px;
+				}
+			}
 		</style>
 
 	</head>
 
-	<body onload="tune()">
+	<body>
 		<?php reset($station); ?>
 
 		<div class="container">
@@ -81,6 +86,11 @@ header('Content-Type: text/html; charset=utf-8');
 		<script src="js/bootstrap.min.js"></script>
 
 		<script type="text/javascript">
+			$(function() {
+				tune();
+				setInterval(current(), 180000);
+			});
+
 			function ajax(url) {
 				var req = new XMLHttpRequest();
 				req.open("GET", url);
@@ -99,6 +109,25 @@ header('Content-Type: text/html; charset=utf-8');
 			}
 			function shutdown(arg) {
 				ajax("shutdown.php?arg=" + encodeURIComponent(arg));
+				return false;
+			}
+			function other(url) {
+				var req2 = new XMLHttpRequest();
+				req2.open("GET", url);
+				req2.onload = function() {
+					content = req2.responseText;
+					if (content == '') {
+						$('#current').hide();
+					} else {
+						$('#current').show();
+						document.getElementById("current").innerHTML = content;
+					}
+					console.log(content);
+				}
+				req2.send();
+			}
+			function current() {
+				other("other.php");
 				return false;
 			}
 		</script>
