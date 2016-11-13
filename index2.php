@@ -88,7 +88,7 @@ header('Content-Type: text/html; charset=utf-8');
 		<script type="text/javascript">
 			$(function() {
 				tune();
-				setInterval(current(), 180000);
+				setInterval(current, 60000);
 			});
 
 			function ajax(url) {
