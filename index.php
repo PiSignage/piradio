@@ -1,5 +1,4 @@
 <?php
-
 $stationfile = '/home/pi/.radiodb';
 $stationtext = file($stationfile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
@@ -15,29 +14,83 @@ if ($stationtext !== FALSE) {
 }
 
 header('Content-Type: text/html; charset=utf-8');
-
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-GB">
-	<head profile="http://www.w3.org/2005/10/profile">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" media="screen" href="css/bootstrap.min.css">
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
 		<title>Internet Radio</title>
 		<meta name="author" content="Michael Jones" />
+
 		<style type="text/css">
-			* { border: 0; margin: 0; padding: 0; }
-			body { margin: 10px; background-color: #fff; }
-			img { width: 72px; height: 72px; margin-right: 10px; float: left; }
-			a { text-decoration: none; }
-			div#clr { clear: both; }
-			pre { color: #000; background-color: #bdf; width: 616px; margin-top: 10px; padding: 10px 15px; overflow-x: hidden; }
-			div#listall { font: 16px Helvetica; width: 646px; margin-top: 10px; overflow-x: hidden; }
-			div.station { padding: 10px 15px; }
-			div.row1 { background-color: #f0f0f0; }
-			div#reboot, div#poweroff { cursor: pointer; font: 24px Helvetica; color: #fff; width: 616px; margin-top: 10px; padding: 10px 15px; text-align: center; }
-			div#reboot { background-color: #0c0; }
-			div#poweroff { background-color: #f00; }
+			pre {
+				font-size: 22px;
+				border: none;
+				border-radius: 0px;
+				color: #000;
+				background-color: #bdf;
+				margin-top: 10px;
+			}
+			@media only screen and (min-width: 600px) {
+				pre {
+					font-size: 12px;
+				}
+			}
 		</style>
+
+	</head>
+
+	<body>
+		<?php reset($station); ?>
+
+		<div class="container">
+
+			<div class="starter-template">
+				<pre id="lcd"></pre>
+			</div>
+
+			<a href="#" class="btn btn-block btn-lg btn-danger" onclick="return tune('off')"><span class="glyphicon glyphicon-off"></span> Radio Off</a>
+			<a href="#" class="btn btn-block btn-lg btn-primary" onclick="return vol('-')"><span class="glyphicon glyphicon-volume-down"></span> Vol -</a>
+			<a href="#" class="btn btn-block btn-lg btn-primary" onclick="return vol('+')"><span class="glyphicon glyphicon-volume-up"></span> Vol +</a>
+			<a href="#" class="btn btn-block btn-lg btn-primary" onclick="return vol('mute')"><span class="glyphicon glyphicon-volume-off"></span> Mute</a>
+			<a href="#" class="btn btn-block btn-lg btn-success" onclick="return shutdown('reboot')"><span class="glyphicon glyphicon-repeat"></span> System Reboot</a>
+			<a href="#" class="btn btn-block btn-lg btn-danger" onclick="return shutdown('poweroff')"><span class="glyphicon glyphicon-off"></span> System Shutdown</a>
+
+			<div class="panel panel-default" style="margin-top: 20px">
+				<div class="panel-heading">Stations</div>
+				<div class="panel-body">Please select a station from the list below</div>
+				<ul class="list-group">
+					<?php
+					$rowid = 0;
+					foreach ($station as $id => $url) {
+						echo '<li class="list-group-item ' . $rowid . '"><a href="#' . urlencode($id) . '" onclick="return tune(\'' . urlencode($id) . '\')">' . htmlspecialchars($id . ' | ' . $url) . '</a></li>' . PHP_EOL;
+						$rowid = 1 - $rowid;
+					}
+					?>
+				</ul>
+			</div>
+
+		</div><!-- /.container -->
+
+		<script src="js/jquery-1.11.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+
 		<script type="text/javascript">
+			$(function() {
+				tune();
+				setInterval(current, 60000);
+			});
+
 			function ajax(url) {
 				var req = new XMLHttpRequest();
 				req.open("GET", url);
@@ -58,45 +111,27 @@ header('Content-Type: text/html; charset=utf-8');
 				ajax("shutdown.php?arg=" + encodeURIComponent(arg));
 				return false;
 			}
+			function other(url) {
+				var req2 = new XMLHttpRequest();
+				req2.open("GET", url);
+				req2.onload = function() {
+					content = req2.responseText;
+					if (content == '') {
+						$('#current').hide();
+					} else {
+						$('#current').show();
+						document.getElementById("current").innerHTML = content;
+					}
+					console.log(content);
+				}
+				req2.send();
+			}
+			function current() {
+				other("other.php");
+				return false;
+			}
 		</script>
-	</head>
-	<body onload="tune()">
-		<div id="favs">
-<?php
 
-reset($station);
-for ($i = 0; $i < 5; ++$i) {
-	echo "\t\t\t";
-	if ($a = each($station)) {
-		list($id, $url) = $a;
-		echo '<a href="#' . urlencode($id) . '" onclick="return tune(\'' . urlencode($id) . '\')" title="' . htmlspecialchars($id) . '"><img src="logo-' . urlencode($id) . '.png" alt="' . htmlspecialchars($id) . '" /></a>';
-	} else {
-		echo '<img src="logo-none.png" alt="none" />';
-	}
-	echo PHP_EOL;
-}
-
-?>
-			<a href="#off" onclick="return tune('off')" title="Radio Off"><img src="cmd-off.png" alt="off" /></a>
-			<a href="#dec" onclick="return vol('-')" title="Volume Down"><img src="cmd-dec.png" alt="dec" /></a>
-			<a href="#inc" onclick="return vol('+')" title="Volume Up"><img src="cmd-inc.png" alt="inc" /></a>
-			<div id="clr"></div>
-		</div>
-		<pre id="lcd"></pre>
-<?php
-
-if (count($station)) {
-	echo "\t\t" . '<div id="listall">' . PHP_EOL;
-	$rowid = 0;
-	foreach ($station as $id => $url) {
-		echo "\t\t\t" . '<div class="station row' . $rowid . '"><a href="#' . urlencode($id) . '" onclick="return tune(\'' . urlencode($id) . '\')">' . htmlspecialchars($id . ' | ' . $url) . '</a></div>' . PHP_EOL;
-		$rowid = 1 - $rowid;
-	}
-	echo "\t\t" . '</div>' . PHP_EOL;
-}
-
-?>
-		<div id="reboot" onclick="return shutdown('reboot')">Reboot</div>
-		<div id="poweroff" onclick="return shutdown('poweroff')">Power Off</div>
 	</body>
+
 </html>
