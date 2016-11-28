@@ -40,6 +40,7 @@ header('Content-Type: text/html; charset=utf-8');
 				color: #000;
 				background-color: #bdf;
 				margin-top: 10px;
+				overflow: hidden;
 			}
 			@media only screen and (min-width: 600px) {
 				pre {
@@ -57,6 +58,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 			<div class="starter-template">
 				<pre id="lcd"></pre>
+				<pre id="current"></pre>
 			</div>
 
 			<a href="#" class="btn btn-block btn-lg btn-danger" onclick="return tune('off')"><span class="glyphicon glyphicon-off"></span> Radio Off</a>
@@ -133,5 +135,4 @@ header('Content-Type: text/html; charset=utf-8');
 		</script>
 
 	</body>
-
 </html>
