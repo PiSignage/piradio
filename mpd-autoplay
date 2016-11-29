@@ -1,0 +1,34 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          mpd-autoplay
+# Required-Start:    mpd
+# Required-Stop:
+# Should-Start:
+# Should-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Ensures that mpd plays on startup
+# Description:       Starts after mpd, and uses the mpc client to tell mpd to play
+### END INIT INFO
+#
+# Requires mpd and mpc
+#
+# To install, use 'insserv mpd-autoplay'
+
+. /lib/lsb/init-functions
+
+case "$1" in
+	start)
+		mpc play
+		;;
+	stop|restart)
+		;;
+	status)
+		echo "Nothing to see here, move along..."
+		;;
+	*)
+		echo "Usage: $0 start|stop|restart|status"
+		exit 2
+		;;
+esac
