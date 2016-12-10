@@ -151,7 +151,8 @@ if [ -z "$1" ]; then
 			curstation="(station database not found at \"$DBFILE\")"
 		fi
 	fi
-	snooze=$(SnoozeFind)
+	#snooze=$(SnoozeFind)
+	snooze=''
 	echo
 	[ -z "$curstation" ] || echo "   Station : $curstation"
 	[ -z "$curstream" ]  || echo "   Stream  : $curstream"
@@ -181,14 +182,14 @@ fi
 if [[ "$1" == "on" || "$1" == "play" ]]; then
 	# TODO: check if a radio stream is lined up
 	$PLAYER play > /dev/null
-	SnoozeReset
+	#SnoozeReset
 	exit $ERR_OK
 fi
 
 # Turn radio off
 if [[ "$1" == "off" || "$1" == "stop" ]]; then
 	$PLAYER stop > /dev/null
-	SnoozeClear
+	#SnoozeClear
 	exit $ERR_OK
 fi
 
@@ -257,6 +258,6 @@ $PLAYER stop > /dev/null
 $PLAYER clear > /dev/null
 $PLAYER add $stream > /dev/null
 $PLAYER play > /dev/null
-SnoozeReset
+#SnoozeReset
 
 exit $ERR_OK
